@@ -1,1 +1,34 @@
-<h1>Crosscut Comments</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Crosscut Comments</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-success btn home" onclick="location.href='/'">Home</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-success btn saved" onclick="location.href='/saved'">Saved Articles</button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-outline-success btn scrape">Scrape New Articles</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="content">
+{{#each articles}}
+  <h2><a href="https://crosscut.com{{this.url}}">{{this.headline}}</a></h2>
+  <p>{{this.date}} &mdash; {{this.summary}}</p>
+  {{#if this.saved}}
+    <button type="button" class="btn btn-outline-success btn-sm notes" data-article="{{this.article}}" data-saved="{{this.saved}}">Article Notes</button>
+    <button type="button" class="btn btn-outline-danger btn-sm save" data-article="{{this.article}}" data-saved="{{this.saved}}">Remove from Saved</button>
+  {{else}}
+    <button type="button" class="btn btn-outline-primary btn-sm save" data-article="{{this.article}}" data-saved="{{this.saved}}">Save Article</button>
+  {{/if}}
+  <hr>
+{{/each}}
+</div>

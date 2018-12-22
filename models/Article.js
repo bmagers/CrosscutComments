@@ -10,7 +10,7 @@ var ArticleSchema = new Schema({
   headline: {
     type: String
   },
-  teaser: {
+  summary: {
     type: String
   },
   url: {
@@ -18,6 +18,10 @@ var ArticleSchema = new Schema({
   },
   date: {
     type: String
+  },
+  saved: {
+    type: Boolean,
+    default: false
   }
 });
 
