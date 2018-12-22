@@ -6,6 +6,7 @@ var db = require("../models");
 router.get("/scrape", function(req, res) {
   var cheerio = require("cheerio");
   var axios = require("axios");
+  var count = 0;
   axios.get("https://crosscut.com/articles").then(function(response) {
     var $ = cheerio.load(response.data);
     $("article").each(function(i, element) {
@@ -14,7 +15,6 @@ router.get("/scrape", function(req, res) {
       var summary = $(element).find(".field--name-field-article-teaser").text();
       var url = $(element).find("h2").find("a").attr("href");
       var date = $(element).find(".month-day-year-date").text();
-      var count = 0;
 
       if (article && headline && summary && url && date) {
         db.Article.create({
@@ -25,13 +25,13 @@ router.get("/scrape", function(req, res) {
           date: date
         }).then(function(dbResult) {
           count++;
-          res.send(count);
         }).catch(function(error) {
           if (error) { console.log(error); }
         });
       }
 
     });
+    res.status(200).end();
   });
 });
 
@@ -45,6 +45,25 @@ router.get("/", function(req, res) {
     res.render("index", hbsObject);
   }).catch(function(error) {
     res.json(error);
+  });
+});
+
+// get notes
+router.get("/notes/:article", function(req, res) {
+  console.log("getting article " + req.params.article);
+  db.Article.findOne({
+    article: req.params.article
+  }).then(function(data) {
+    console.log("found it!");
+    var hbsObject = {
+      article: data.article,
+      headline: data.headline
+    };
+    console.log(hbsObject);
+    // res.render("index", hbsObject);
+    res.json(hbsObject);
+  }).catch(function(error) {
+    console.log(error);
   });
 });
 
