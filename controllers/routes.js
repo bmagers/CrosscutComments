@@ -20,8 +20,6 @@ router.get("/scrape", function(req, res) {
         summary: summary,
         url: url,
         date: date
-      }).catch(function(error) {
-        if (error) { console.log(error); }
       });
     });
     res.status(200).end();
@@ -72,7 +70,7 @@ router.put("/save/:article", function(req, res) {
 router.get("/notes/:article", function(req, res) {
   db.Article.findOne({
     article: req.params.article
-  }).populate("note").then(function(dbArticle) {
+  }).populate("notes").then(function(dbArticle) {
     res.json(dbArticle);
   }).catch(function(error) {
     console.log(error);
@@ -87,13 +85,13 @@ router.post("/notes/add/:article", function(req, res) {
   .then(function(dbNote) {
     return db.Article.findOneAndUpdate(
       { article: article },
-      { note: dbNote._id },
+      { notes: dbNote._id },
       { new: true }
     );
   }).then(function(dbArticle) {
     res.json(dbArticle);
   }).catch(function(error) {
-    if (error) { console.log(error); }
+    console.log(error);
   });
 });
 

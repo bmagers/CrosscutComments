@@ -42,12 +42,8 @@ function notes() {
     method: "GET",
     url: "/notes/" + article
   }).then(function(data) {
-    console.log(data);
     $("#articleModalLabel").text(data.article);
-    var note = data.note.note;
-    if (note) {
-      $("#notes").append(note);
-    }
+    showArticles(data);
   });
 }
 
@@ -62,7 +58,15 @@ function add() {
       note: note
     }
   }).then(function(data) {
-    console.log(data);
+    showArticles(data);
     $("#comment").val("");
+  });
+}
+
+// display articles
+function showArticles(data) {
+  $("#notes").text("");
+  data.notes.forEach(function(item) {
+    $("#notes").append(item.note);
   });
 }
