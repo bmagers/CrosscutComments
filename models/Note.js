@@ -3,8 +3,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
-  article: {
-    note: String
+  note: {
+    type: String,
+    required: true
   }
 });
 
