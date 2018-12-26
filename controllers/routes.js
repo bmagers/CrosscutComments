@@ -78,6 +78,9 @@ router.get("/notes/:article", function(req, res) {
 });
 
 // post note to database
+// note: posting the note replaces the existing note, instead of adding to the array of notes
+// this is coded exactly like week 18, activity 18, yet behaves differently, and I'm stumped as to
+// why the difference in behavior
 router.post("/notes/add/:article", function(req, res) {
   var article = req.params.article;
   var note = req.body;
@@ -94,5 +97,8 @@ router.post("/notes/add/:article", function(req, res) {
     console.log(error);
   });
 });
+
+// delete note
+// to do after figuring out how to save more than one article at a time
 
 module.exports = router;

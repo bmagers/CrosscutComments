@@ -1,3 +1,4 @@
+// event listeners
 $(document).ready(function() {
   $(document).on("click", ".scrape", scrape);
   $(document).on("click", ".save", save);
